@@ -6,13 +6,34 @@ def log(*args, method="householder", **kwargs):
         method (str):
              'householder': using Households method
     """
-    return {
-        "householder": log_householder
-    }[method](*args, **kwargs)
+    return {"newton": log_newton, "householder": log_householder}[method](
+        *args, **kwargs
+    )
+
+
+def log_newton(x, iterations=8, exp_iterations=8):
+    """Approximates the logarithm using the Newton Raphson method
+
+    Args:
+        iterations (int): number of iterations for Newton Raphson approximation.
+        exp_iterations (int): number of iterations for limit approximation of exp
+
+    .. inspired by https://github.com/facebookresearch/CrypTen
+    """
+    y = x / 40 + 1.9 - 8 * (-2 * x - 0.3).exp()
+
+    for i in range(iterations):
+        h = [1 - x * (-y).exp(iterations=exp_iterations)]
+        for i in range(1, 5):
+            h.append(h[-1] * h[0])
+
+        y -= h[0] * (1 + h[0] + h[1] + h[2] + h[3] + h[4])
+
+    return y
 
 
 def log_householder(x, iterations=2, exp_iterations=8):
-    """Approximates the natural logarithm using 6th order modified Householder iterations.
+    """Approximates the logarithm using 6th order modified Householder iterations.
     Recall that Householder method is an algorithm to solve a non linear equation f(x) = 0.
     Here  f: x -> 1 - C * exp(-x)  with C = self
 
