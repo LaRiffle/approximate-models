@@ -1,4 +1,3 @@
-
 def exp(*args, method="limit", **kwargs):
     """
     Compute the approximated exponential
@@ -7,9 +6,7 @@ def exp(*args, method="limit", **kwargs):
         method (str):
              'limit': using a limit approximation
     """
-    return {
-        "limit": exp_limit
-    }[method](*args, **kwargs)
+    return {"limit": exp_limit}[method](*args, **kwargs)
 
 
 def exp_limit(x, iterations=8):
@@ -24,4 +21,4 @@ def exp_limit(x, iterations=8):
 
     .. inspired by https://github.com/facebookresearch/CrypTen
     """
-    return (1 + x / 2 ** iterations) ** (2 ** iterations)
+    return (x / 2 ** iterations + 1) ** (2 ** iterations)
