@@ -21,4 +21,4 @@ def exp_limit(x, iterations=8):
 
     .. inspired by https://github.com/facebookresearch/CrypTen
     """
-    return (x / 2 ** iterations + 1) ** (2 ** iterations)
+    return (1 + x / 2 ** iterations) ** (2 ** iterations)

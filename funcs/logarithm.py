@@ -1,3 +1,6 @@
+from funcs import exp
+
+
 def log(*args, method="householder", **kwargs):
     """
     Compute the approximated logarithm
@@ -11,7 +14,7 @@ def log(*args, method="householder", **kwargs):
     )
 
 
-def log_newton(x, iterations=8, exp_iterations=8):
+def log_newton(x, iterations=2, exp_iterations=8):
     """Approximates the logarithm using the Newton Raphson method
 
     Args:
@@ -20,10 +23,10 @@ def log_newton(x, iterations=8, exp_iterations=8):
 
     .. inspired by https://github.com/facebookresearch/CrypTen
     """
-    y = x / 40 + 1.9 - 8 * (-2 * x - 0.3).exp()
+    y = x / 40 + 1.9 - 8 * exp(-2 * x - 0.3, iterations=exp_iterations)
 
     for i in range(iterations):
-        h = [1 - x * (-y).exp(iterations=exp_iterations)]
+        h = [1 - x * exp((-y).refresh(), iterations=exp_iterations)]
         for i in range(1, 5):
             h.append(h[-1] * h[0])
 
@@ -51,15 +54,15 @@ def log_householder(x, iterations=2, exp_iterations=8):
     """
 
     # Initialization to a decent estimate (found by qualitative inspection):
-    # ln(x) = x/40 - 8exp(-2x - .3) + 1.9
-    y = x / 40 - 8 * (-2 * x - 0.3).exp() + 1.9
+
+    y = x / 120 + 3.0 - 20 * exp(-2 * x - 1.0, iterations=exp_iterations)
 
     # 6th order Householder iterations
     for i in range(iterations):
-        h = [1 - x * (-y).refresh().exp(iterations=exp_iterations)]
+        h = [1 - x * exp((-y).refresh(), iterations=exp_iterations)]
         for i in range(1, 5):
             h.append(h[-1] * h[0])
 
-        y -= h[0] * (1 + h[0] / 2 + h[1] / 3 + h[2] / 6 + h[3] / 5 + h[4] / 7)
+        y -= h[0] * (1 + h[0] / 2 + h[1] / 3 + h[2] / 4 + h[3] / 5 + h[4] / 6)
 
     return y
