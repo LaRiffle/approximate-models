@@ -55,7 +55,7 @@ def log_householder(x, iterations=2, exp_iterations=8):
 
     # Initialization to a decent estimate (found by qualitative inspection):
 
-    y = x / 120 + 3.0 - 20 * exp(-2 * x - 1.0, iterations=exp_iterations)
+    y = x / 31 + 1.59 - 20 * exp(-2 * x - 1.47, iterations=exp_iterations)
 
     # 6th order Householder iterations
     for i in range(iterations):
