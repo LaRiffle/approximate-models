@@ -9,9 +9,8 @@ def log(*args, method="householder", **kwargs):
         method (str):
              'householder': using Households method
     """
-    return {"newton": log_newton, "householder": log_householder}[method](
-        *args, **kwargs
-    )
+    log = {"newton": log_newton, "householder": log_householder}
+    return log[method](*args, **kwargs)
 
 
 def log_newton(x, iterations=2, exp_iterations=8):

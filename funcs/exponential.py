@@ -6,7 +6,8 @@ def exp(*args, method="limit", **kwargs):
         method (str):
              'limit': using a limit approximation
     """
-    return {"limit": exp_limit}[method](*args, **kwargs)
+    exp = {"limit": exp_limit}
+    return exp[method](*args, **kwargs)
 
 
 def exp_limit(x, iterations=8):
