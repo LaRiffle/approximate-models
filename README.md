@@ -9,9 +9,11 @@ This Python Library is a collection of function approximations to replace some p
     
 /funcs # Implementation of approximated functions
     - exponential.py
+    - inverse.py
     - logarithm.py
     
 /experiments # Analysis of approximations with concrete data
     - Exponential
+    - Inverse (WIP)
     - Logarithm
 ```
